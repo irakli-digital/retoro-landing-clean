@@ -9,34 +9,33 @@ import { BeforeInteractiveScripts, AfterInteractiveScripts, LazyScripts } from "
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Mypen.ge - ᲓᲐᲖᲝᲒᲔ ᲓᲠᲝ. ᲬᲔᲠᲔ ᲣᲙᲔᲗᲔᲡᲐᲓ",
-  description: "ყველა საბაზისო ინსტრუმენტი AI-სთან მუშაობის დასაწყებად.",
+  title: "Retoro - Never Miss a Return Deadline Again",
+  description: "Track your purchase return windows, get timely reminders, and maximize your refund opportunities. Smart deadline tracking with multi-currency support.",
   icons: {
     icon: "/images/favicon.svg",
   },
-  generator: "v0.dev",
-  metadataBase: new URL('https://mypen.ge'),
+  metadataBase: new URL('https://retoro.app'),
   openGraph: {
-    title: "Mypen.ge - ᲓᲐᲖᲝᲒᲔ ᲓᲠᲝ. ᲬᲔᲠᲔ ᲣᲙᲔᲗᲔᲡᲐᲓ",
-    description: "ყველა საბაზისო ინსტრუმენტი AI-სთან მუშაობის დასაწყებად.",
-    url: 'https://mypen.ge',
-    siteName: 'Mypen.ge',
+    title: "Retoro - Never Miss a Return Deadline Again",
+    description: "Track your purchase return windows, get timely reminders, and maximize your refund opportunities.",
+    url: 'https://retoro.app',
+    siteName: 'Retoro',
     images: [
       {
-        url: '/images/og-image.webp', // <- OG IMAGE PATH HERE
+        url: '/images/og-image.webp',
         width: 1200,
         height: 630,
-        alt: 'Mypen.ge - AI ინსტრუმენტები',
+        alt: 'Retoro - Smart Return Tracking',
       }
     ],
-    locale: 'ka_GE',
+    locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Mypen.ge - ᲓᲐᲖᲝᲒᲔ ᲓᲠᲝ. ᲬᲔᲠᲔ ᲣᲙᲔᲗᲔᲡᲐᲓ",
-    description: "ყველა საბაზისო ინსტრუმენტი AI-სთან მუშაობის დასაწყებად.",
-    images: ['/images/og-image.jpg'], // <- TWITTER IMAGE PATH HERE
+    title: "Retoro - Never Miss a Return Deadline Again",
+    description: "Track your purchase return windows, get timely reminders, and maximize your refund opportunities.",
+    images: ['/images/og-image.jpg'],
   },
 }
 
@@ -46,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ka" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Scripts that need to load before page becomes interactive */}
         <BeforeInteractiveScripts />

@@ -1,30 +1,69 @@
-# Saas Landing Page
+# Retoro Landing Page
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
-
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/iraklis-projects-e7cfc354/v0-saas-landing-page)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/eOwlhw25H3T)
+Never miss a return deadline again. Retoro helps you track purchase return windows, sends timely reminders, and maximizes your refund opportunities.
 
 ## Overview
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+Retoro is a return tracking platform that helps shoppers manage return deadlines across multiple retailers. The landing page is built with Next.js 14, TypeScript, and Tailwind CSS, featuring a clean design that matches our native iOS app.
 
-## Deployment
+## Features
 
-Your project is live at:
+- **Smart Deadline Tracking**: Automatically calculates return windows based on retailer policies
+- **Urgency Indicators**: Color-coded system (Green → Orange → Red) for priority management
+- **Receipt Scanning**: Upload invoices for automatic item extraction
+- **Multi-Currency Support**: Track purchases in 23 different currencies
+- **Push Notifications**: Timely reminders at 7 days, 2 days, and deadline day
+- **Money Saved Tracker**: Monitor savings from timely returns
 
-**[https://vercel.com/iraklis-projects-e7cfc354/v0-saas-landing-page](https://vercel.com/iraklis-projects-e7cfc354/v0-saas-landing-page)**
+## Tech Stack
 
-## Build your app
+- **Framework**: Next.js 14.2.16 with App Router
+- **Language**: TypeScript with strict mode
+- **Styling**: Tailwind CSS with CSS variables
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **Animations**: Framer Motion
+- **Database**: Neon PostgreSQL (serverless)
 
-Continue building your app on:
+## Getting Started
 
-**[https://v0.dev/chat/projects/eOwlhw25H3T](https://v0.dev/chat/projects/eOwlhw25H3T)**
+```bash
+# Install dependencies
+npm install
 
-## How It Works
+# Run development server
+npm run dev
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## Project Structure
+
+```
+retoro-landing/
+├── app/              # Next.js App Router pages
+├── components/       # React components
+├── lib/             # Utility functions and database
+├── config/          # Configuration files
+├── public/          # Static assets
+└── styles/          # Global CSS
+```
+
+## Environment Variables
+
+Create a `.env` file based on `.env.local.example`:
+
+```env
+DATABASE_URL=your_neon_database_url
+NEXT_PUBLIC_GTM_ID=your_gtm_id
+NEXT_PUBLIC_GA_ID=your_ga_id
+NEXT_PUBLIC_FB_PIXEL_ID=your_fb_pixel_id
+NEXT_PUBLIC_HOTJAR_ID=your_hotjar_id
+```
+
+## License
+
+Copyright © 2025 Retoro. All rights reserved.

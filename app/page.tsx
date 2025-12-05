@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { Check, ArrowRight, Star, Languages, LifeBuoy, Users, FileText, Search, Briefcase, GraduationCap, MessageSquare, Code, Plane, Wallet, Shield, Layers } from "lucide-react"
+import { Check, ArrowRight, Star, Users, Clock, Bell, Receipt, CreditCard, TrendingUp, Package, RefreshCw, ShoppingBag, ShoppingCart, Shirt, Smartphone, Gift, DollarSign, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
@@ -31,39 +31,39 @@ export default function LandingPage() {
 
   const features = [
     {
-      title: "ქართული, როგორც მშობლიური",
-      description: "ბუნებრივი სტილი, სწორი ტერმინოლოგია.",
-      icon: <Languages className="size-6 stroke-[1.5] text-blue-500" />,
-      iconBg: "bg-blue-500/10 dark:bg-blue-500/20",
-    },
-    {
-      title: "ვებ-ძიება რეალურ დროში",
-      description: "პასუხები წყაროებითა და სწრაფი fact-check-ით.",
-      icon: <Search className="size-6 stroke-[1.5] text-purple-500" />,
-      iconBg: "bg-purple-500/10 dark:bg-purple-500/20",
-    },
-    {
-      title: "ფაილების ღრმა ანალიზი",
-      description: "დიდი PDFs/დოკები → შეჯამება, ცხრილები, ინსაითები.",
-      icon: <FileText className="size-6 stroke-[1.5] text-amber-500" />,
-      iconBg: "bg-amber-500/10 dark:bg-amber-500/20",
-    },
-    {
-      title: "მრავალმოდელა არჩევანი",
-      description: "Light/Pro/Ultra სიჩქარისა და სიღრმისთვის.",
-      icon: <Layers className="size-6 stroke-[1.5] text-emerald-500" />,
+      title: "Smart Deadline Tracking",
+      description: "Automatically calculates return windows based on retailer policies.",
+      icon: <Clock className="size-6 stroke-[1.5] text-emerald-500" />,
       iconBg: "bg-emerald-500/10 dark:bg-emerald-500/20",
     },
     {
-      title: "კონფიდენციალურობა",
-      description: "ფაილების/ჩათების წაშლა და კონტროლი შენს ხელშია.",
-      icon: <Shield className="size-6 stroke-[1.5] text-rose-500" />,
+      title: "Urgency Indicators",
+      description: "Color-coded system (Green → Orange → Red) shows priority at a glance.",
+      icon: <Package className="size-6 stroke-[1.5] text-amber-500" />,
+      iconBg: "bg-amber-500/10 dark:bg-amber-500/20",
+    },
+    {
+      title: "Receipt Scanning",
+      description: "Upload invoices for automatic item extraction and tracking.",
+      icon: <Receipt className="size-6 stroke-[1.5] text-blue-500" />,
+      iconBg: "bg-blue-500/10 dark:bg-blue-500/20",
+    },
+    {
+      title: "Multi-Currency Support",
+      description: "Track purchases in 23 currencies with automatic conversion.",
+      icon: <Globe className="size-6 stroke-[1.5] text-purple-500" />,
+      iconBg: "bg-purple-500/10 dark:bg-purple-500/20",
+    },
+    {
+      title: "Push Notifications",
+      description: "Get reminders at 7 days, 2 days, and deadline day.",
+      icon: <Bell className="size-6 stroke-[1.5] text-rose-500" />,
       iconBg: "bg-rose-500/10 dark:bg-rose-500/20",
     },
     {
-      title: "24/7 მხარდაჭერა",
-      description: "მზად ვართ, როცა დაგჭირდება.",
-      icon: <LifeBuoy className="size-6 stroke-[1.5] text-cyan-500" />,
+      title: "Money Saved Tracker",
+      description: "See how much you've saved by returning items on time.",
+      icon: <TrendingUp className="size-6 stroke-[1.5] text-cyan-500" />,
       iconBg: "bg-cyan-500/10 dark:bg-cyan-500/20",
     },
   ]
@@ -80,10 +80,10 @@ export default function LandingPage() {
           asChild
         >
           <SmartCtaLink
-            aria-label="დაიწყე უფასოდ"
+            aria-label="Start Tracking Free"
             data-cta-id="cta_mobile_sticky"
           >
-            დაიწყე უფასოდ
+            Start Tracking Free
             <ArrowRight className="ml-2 size-4" />
           </SmartCtaLink>
         </Button>
@@ -102,34 +102,34 @@ export default function LandingPage() {
               className="text-center max-w-3xl mx-auto mb-8 md:mb-12"
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-tight">
-                შენი ქართული წერის AI ასისტენტი
+                Never Miss a Return Deadline Again
               </h1>
 
               {/* Social Proof Chip */}
               <div className="flex items-center justify-center gap-2 mb-5">
                 <Badge className="rounded-full px-4 py-1.5 text-sm font-medium flex items-center gap-2" variant="secondary">
                   <Users className="size-4" />
-                  10,000+ კმაყოფილი მომხმარებელი
+                  Join 10,000+ Smart Shoppers
                 </Badge>
               </div>
 
               <p className="text-base md:text-lg text-muted-foreground mb-5 max-w-[70ch] mx-auto leading-relaxed">
-                მიიღე პასუხები ნებისმიერ თემაზე, წერე გამართული ქართულით, ატვირთე და გააანალიზე ფაილები — ერთ სივრცეში.
+                Track your purchases, get timely reminders, and maximize your refund windows with Retoro's smart deadline tracking.
               </p>
 
               {/* Trust chips */}
               <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
                 <Badge className="rounded-full px-3 py-1 text-xs font-medium" variant="outline">
-                  ქართული ენა - 100%
+                  Unlimited Tracking
                 </Badge>
                 <Badge className="rounded-full px-3 py-1 text-xs font-medium" variant="outline">
-                  ვებ-ძიება
+                  Receipt Scanning
                 </Badge>
                 <Badge className="rounded-full px-3 py-1 text-xs font-medium" variant="outline">
-                  ფაილების ანალიზი
+                  Multi-Currency
                 </Badge>
                 <Badge className="rounded-full px-3 py-1 text-xs font-medium" variant="outline">
-                  სწრაფი პასუხები
+                  Smart Reminders
                 </Badge>
               </div>
 
@@ -141,14 +141,14 @@ export default function LandingPage() {
                   asChild
                 >
                   <SmartCtaLink
-                    aria-label="დაიწყე უფასოდ"
+                    aria-label="Start Tracking Free"
                     data-cta-id="cta_hero_start_free"
                   >
-                    დაიწყე უფასოდ
+                    Start Tracking Free
                     <ArrowRight className="ml-2 size-4" />
                   </SmartCtaLink>
                 </Button>
-                <span className="text-xs text-muted-foreground">საკრედიტო ბარათი არ არის საჭირო</span>
+                <span className="text-xs text-muted-foreground">No credit card required</span>
               </div>
             </motion.div>
 
@@ -185,7 +185,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">რატომ MyPen</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Why Retoro</h2>
             </motion.div>
 
             <motion.div
@@ -220,57 +220,57 @@ export default function LandingPage() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
             >
-              <h2 className="text-3ლ md:text-4xl font-bold tracking-tight">რას აკეთებს</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Perfect For</h2>
             </motion.div>
 
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto mb-8">
               {[
                 {
-                  title: "სამუშაოს მოძებნა",
-                  description: "CV/cover letter, ვაკანსიები, გასაუბრებისთვის მზადება.",
-                  icon: <Briefcase className="size-5 stroke-[1.5] text-indigo-500" />,
+                  title: "Online Shoppers",
+                  description: "Track Amazon, eBay, and marketplace purchases with ease.",
+                  icon: <ShoppingCart className="size-5 stroke-[1.5] text-indigo-500" />,
                   iconBg: "bg-indigo-500/10 dark:bg-indigo-500/20",
                 },
                 {
-                  title: "ფაილების ანალიზი",
-                  description: "დიდი PDFs/დოკები → შეჯამება და მთავარი ინსაითები.",
-                  icon: <FileText className="size-5 stroke-[1.5] text-amber-500" />,
+                  title: "Fashion Enthusiasts",
+                  description: "Never miss clothing return windows (30-60 days).",
+                  icon: <Shirt className="size-5 stroke-[1.5] text-amber-500" />,
                   iconBg: "bg-amber-500/10 dark:bg-amber-500/20",
                 },
                 {
-                  title: "სწავლა & კვლევა",
-                  description: "რთული თემების ახსნა + წყაროები.",
-                  icon: <GraduationCap className="size-5 stroke-[1.5] text-emerald-500" />,
+                  title: "Electronics Buyers",
+                  description: "Monitor return periods for tech purchases and warranties.",
+                  icon: <Smartphone className="size-5 stroke-[1.5] text-emerald-500" />,
                   iconBg: "bg-emerald-500/10 dark:bg-emerald-500/20",
                 },
                 {
-                  title: "ყოველდღიური კითხვები",
-                  description: "რეცეპტები, რჩევები, \"როგორ გავაკეთო?\".",
-                  icon: <MessageSquare className="size-5 stroke-[1.5] text-purple-500" />,
+                  title: "Gift Recipients",
+                  description: "Track exchange deadlines for presents you received.",
+                  icon: <Gift className="size-5 stroke-[1.5] text-purple-500" />,
                   iconBg: "bg-purple-500/10 dark:bg-purple-500/20",
                 },
                 {
-                  title: "ბიზნეს დოკუმენტები",
-                  description: "ბრეიფები, შეთავაზებები, მონახაზები (იურ. კონსულტაცია არაა).",
-                  icon: <Briefcase className="size-5 stroke-[1.5] text-blue-500" />,
+                  title: "Bargain Hunters",
+                  description: "Try products risk-free within return windows.",
+                  icon: <DollarSign className="size-5 stroke-[1.5] text-blue-500" />,
                   iconBg: "bg-blue-500/10 dark:bg-blue-500/20",
                 },
                 {
-                  title: "კოდირება",
-                  description: "ახსნა, დებაგი, მოკლე სკრიპტები.",
-                  icon: <Code className="size-5 stroke-[1.5] text-slate-500" />,
+                  title: "International Shoppers",
+                  description: "Manage returns across different countries and currencies.",
+                  icon: <Globe className="size-5 stroke-[1.5] text-slate-500" />,
                   iconBg: "bg-slate-500/10 dark:bg-slate-500/20",
                 },
                 {
-                  title: "მოგზაურობა",
-                  description: "მარშრუტი, ბიუჯეტი, ლოკალური გაიდები.",
-                  icon: <Plane className="size-5 stroke-[1.5] text-sky-500" />,
+                  title: "Busy Professionals",
+                  description: "Let Retoro remember deadlines while you focus on work.",
+                  icon: <Clock className="size-5 stroke-[1.5] text-sky-500" />,
                   iconBg: "bg-sky-500/10 dark:bg-sky-500/20",
                 },
                 {
-                  title: "ფინანსები",
-                  description: "გეგმები, ჩექლისტები, ხარჯების ორგანიზება.",
-                  icon: <Wallet className="size-5 stroke-[1.5] text-green-500" />,
+                  title: "Smart Savers",
+                  description: "Maximize savings by returning items on time.",
+                  icon: <TrendingUp className="size-5 stroke-[1.5] text-green-500" />,
                   iconBg: "bg-green-500/10 dark:bg-green-500/20",
                 },
               ].map((useCase, i) => (
@@ -314,8 +314,8 @@ export default function LandingPage() {
                 className="rounded-full h-12 px-8 text-base transition-all hover:scale-105 hover:shadow-lg"
                 asChild
               >
-                <SmartCtaLink aria-label="დაიწყე უფასოდ" data-cta-id="cta_usecases_section">
-                  დაიწყე უფასოდ
+                <SmartCtaLink aria-label="Start Tracking Free" data-cta-id="cta_usecases_section">
+                  Start Tracking Free
                   <ArrowRight className="ml-2 size-4" />
                 </SmartCtaLink>
               </Button>
@@ -333,7 +333,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col items-center justify-center space-y-4 text-center mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">როგორ მუშაობს</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">How It Works</h2>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-8 md:gap-12 relative mb-10">
@@ -342,18 +342,18 @@ export default function LandingPage() {
               {[
                 {
                   step: "01",
-                  title: "დარეგისტრირდი 60 წამში",
-                  description: "ბარათი არ გჭირდება.",
+                  title: "Add Purchase",
+                  description: "Manual entry or scan your receipt for instant tracking.",
                 },
                 {
                   step: "02",
-                  title: "დაუსვი შეკითხვა ან ატვირთე ფაილი",
-                  description: "ქართულად ან ნებისმიერ ენაზე.",
+                  title: "We Calculate Deadline",
+                  description: "Based on retailer policy, we set your return window.",
                 },
                 {
                   step: "03",
-                  title: "მიიღე ზუსტი, მოკლე პასუხები",
-                  description: "საჭიროებისას ვებ-წყაროებითა და ციტირებით.",
+                  title: "Get Timely Reminders",
+                  description: "Smart notifications at 7 days, 2 days, and deadline day.",
                 },
               ].map((step, i) => (
                 <motion.div
@@ -386,8 +386,8 @@ export default function LandingPage() {
                 className="rounded-full h-12 px-8 text-base transition-all hover:scale-105 hover:shadow-lg"
                 asChild
               >
-                <SmartCtaLink aria-label="დაიწყე უფასოდ" data-cta-id="cta_how_it_works">
-                  დაიწყე უფასოდ
+                <SmartCtaLink aria-label="Start Tracking Free" data-cta-id="cta_how_it_works">
+                  Start Tracking Free
                   <ArrowRight className="ml-2 size-4" />
                 </SmartCtaLink>
               </Button>
@@ -407,47 +407,47 @@ export default function LandingPage() {
             >
               <Badge className="rounded-full px-4 py-1.5 text-sm font-medium flex items-center gap-2" variant="secondary">
                 <Users className="size-4" />
-                10,000+ კმაყოფილი მომხმარებელი
+                Trusted by 10,000+ Shoppers
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">გამოხმაურებები</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">What Our Users Say</h2>
             </motion.div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
               {[
                 {
-                  quote: "სამი მოდელი ერთ პლატფორმაზე — მოქნილი და მარტივი გამოყენება.",
-                  author: "გიორგი ვ.",
-                  role: "პროგრამული უზრუნველყოფის ინჟინერი",
+                  quote: "Saved me $450 last month! I was tracking 8 items and returned 5 just in time.",
+                  author: "Sarah M.",
+                  role: "Online Shopping Enthusiast",
                   rating: 5,
                 },
                 {
-                  quote: "PRO პაკეტი ჩვენს გუნდს პირდაპირ დროს უზოგავს.",
-                  author: "ნინო ე.",
-                  role: "მცირე ბიზნესის მფლობელი",
+                  quote: "Never miss fashion return windows anymore. The 30-day reminder is a lifesaver.",
+                  author: "Jessica T.",
+                  role: "Fashion Blogger",
                   rating: 5,
                 },
                 {
-                  quote: "ULTRA მოდელი — ჩემი საიდუმლო იარაღი კვლევისთვის.",
-                  author: "დავით ჩ.",
-                  role: "მარკეტერი და ბლოგერი",
+                  quote: "Receipt scanning works perfectly. Just snap and forget - Retoro handles the rest.",
+                  author: "Mike R.",
+                  role: "Tech Early Adopter",
                   rating: 5,
                 },
                 {
-                  quote: "უფასო ვერსია მყოფნის ყოველდღიური დავალებებისთვის.",
-                  author: "ანა გ.",
-                  role: "უნივერსიტეტის სტუდენტი",
+                  quote: "As someone who buys a lot of gifts, this app helps me track exchange deadlines effortlessly.",
+                  author: "David K.",
+                  role: "Gift Shopper",
                   rating: 5,
                 },
                 {
-                  quote: "Pro ძლიერი და სწრაფია — ფასი სამართლიანია.",
-                  author: "ლევან ს.",
-                  role: "ფრილანსერი",
+                  quote: "The color-coded urgency system is genius. I know exactly what needs attention first.",
+                  author: "Emma L.",
+                  role: "Busy Professional",
                   rating: 5,
                 },
                 {
-                  quote: "პასუხები ბუნებრივია და ზუსტი ქართულად.",
-                  author: "მარიამ რ.",
-                  role: "პროექტის მენეჯერი",
+                  quote: "Multi-currency support is perfect for my international purchases. Finally, one app for everything.",
+                  author: "Alex P.",
+                  role: "International Shopper",
                   rating: 5,
                 },
               ].map((t, i) => (
@@ -484,8 +484,8 @@ export default function LandingPage() {
               className="flex justify-center pt-8"
             >
               <Button size="lg" className="rounded-full h-12 px-8 text-base transition-all hover:scale-105 hover:shadow-lg" asChild>
-                <SmartCtaLink aria-label="დაიწყე უფასოდ" data-cta-id="cta_testimonials">
-                  დაიწყე უფასოდ
+                <SmartCtaLink aria-label="Start Tracking Free" data-cta-id="cta_testimonials">
+                  Start Tracking Free
                   <ArrowRight className="ml-2 size-4" />
                 </SmartCtaLink>
               </Button>
