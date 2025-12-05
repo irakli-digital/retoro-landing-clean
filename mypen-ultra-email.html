@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ka" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mypen ULTRA - უსაზღვრო შესაძლებლობები</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style type="text/css">
+        /* Reset styles */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+        
+        /* General styles */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #ffffff;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #0a0a0a;
+        }
+        
+        .content-wrapper {
+            padding: 0;
+        }
+        
+        /* Header styles */
+        .header {
+            background-color: #0a0a0a;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .badge {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .hero-title {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin: 0 0 20px 0;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            color: #cccccc;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        /* Features section */
+        .features-section {
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 0 40px 0;
+        }
+        
+        .feature-row {
+            margin-bottom: 40px;
+            display: table;
+            width: 100%;
+        }
+        
+        .feature-content {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 20px;
+            width: 50%;
+        }
+        
+        .feature-image {
+            display: table-cell;
+            vertical-align: middle;
+            width: 50%;
+            text-align: center;
+        }
+        
+        .feature-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+        
+        .feature-description {
+            font-size: 16px;
+            color: #cccccc;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #8b5cf6;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Models section */
+        .models-section {
+            padding: 40px 20px;
+            background-color: #111;
+        }
+        
+        .models-grid {
+            display: table;
+            width: 100%;
+            margin-top: 30px;
+        }
+        
+        .model-card {
+            display: table-cell;
+            width: 33.33%;
+            padding: 20px;
+            vertical-align: top;
+        }
+        
+        .model-inner {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .model-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px auto;
+        }
+        
+        .model-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+        }
+        
+        .model-desc {
+            font-size: 14px;
+            color: #cccccc;
+            margin: 0 0 20px 0;
+        }
+        
+        .model-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+        
+        .model-features li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .model-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 12px;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        
+        .green-dot { background-color: #10b981; }
+        .blue-dot { background-color: #3b82f6; }
+        .purple-dot { background-color: #8b5cf6; }
+        
+        /* Testimonials */
+        .testimonials-section {
+            padding: 40px 20px;
+        }
+        
+        .testimonial-grid {
+            display: table;
+            width: 100%;
+            margin-top: 30px;
+        }
+        
+        .testimonial-card {
+            display: table-cell;
+            width: 50%;
+            padding: 15px;
+            vertical-align: top;
+        }
+        
+        .testimonial-inner {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+        }
+        
+        .stars {
+            color: #fbbf24;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-text {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        
+        .author-info {
+            flex: 1;
+        }
+        
+        .author-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .author-role {
+            font-size: 12px;
+            color: #cccccc;
+            margin: 2px 0 0 0;
+        }
+        
+        /* Pricing section */
+        .pricing-section {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        
+        .pricing-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            border: 2px solid #8b5cf6;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            color: white;
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 0 16px 0 12px;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+        
+        .price-period {
+            color: #cccccc;
+            font-size: 16px;
+        }
+        
+        .price-description {
+            color: #cccccc;
+            margin: 15px 0 25px 0;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .pricing-check {
+            color: #8b5cf6;
+            margin-right: 8px;
+            margin-top: 2px;
+        }
+        
+        /* FAQ section */
+        .faq-section {
+            padding: 40px 20px;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #333;
+            padding: 20px 0;
+        }
+        
+        .faq-question {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+        
+        .faq-answer {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #111;
+            padding: 40px 20px;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: table;
+            width: 100%;
+        }
+        
+        .footer-column {
+            display: table-cell;
+            width: 33.33%;
+            padding: 0 20px;
+            vertical-align: top;
+        }
+        
+        .footer-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .feature-row, .models-grid, .testimonial-grid, .footer-content {
+                display: block !important;
+            }
+            
+            .feature-content, .feature-image, .model-card, .testimonial-card, .footer-column {
+                display: block !important;
+                width: 100% !important;
+                padding: 10px !important;
+            }
+            
+            .hero-title { font-size: 24px; }
+            .hero-subtitle { font-size: 16px; }
+            .section-title { font-size: 24px; }
+            .feature-title { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <img src="https://mypen.ge/images/saasify-logo-dark.svg" alt="Mypen Logo" class="logo">
+        </div>
+        
+        <div class="content-wrapper">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="badge">AI წერა სტრესის გარეშე</div>
+                <h1 class="hero-title">Mypen ULTRA - უსაზღვრო შესაძლებლობები</h1>
+                <p class="hero-subtitle">
+                    Mypen ULTRA სცდება წერის საზღვრებს. ის თქვენი უნივერსალური ასისტენტია, რომელიც შექმნილია შეუზღუდავი პროდუქტიულობისთვის. დაგეგმეთ მოგზაურობა, მართეთ პროექტები, დაწერეთ კოდი თუ უბრალოდ მოაწესრიგეთ ყოველდღიური საქმეები — ULTRA ამ ყველაფერს ამარტივებს.
+                </p>
+                <a href="https://chat.mypen.ge?utm_source=web&utm_campaing=ultra-landing" class="cta-button">გაიაქტიურე</a>
+                <p style="color: #cccccc; margin-top: 20px;">🇬🇪 პირველად – სრული ქართული ენის მხარდაჭერით!</p>
+                <img src="https://mypen.ge/images/blog/optimized/mypen-ultra-hero.webp" alt="Mypen ULTRA Interface" class="hero-image">
+            </div>
+            
+            <!-- Key Features -->
+            <div class="features-section">
+                <div class="section-title">ULTRA ძირითადი მახასიათებლები</div>
+                
+                <!-- Unlimited Usage -->
+                <div class="feature-row">
+                    <div class="feature-content">
+                        <div class="badge">შეუზღუდავი გამოყენება</div>
+                        <h2 class="feature-title">შეუზღუდავი AI სიმძლავრე</h2>
+                        <p class="feature-description">
+                            Mypen ULTRA-ით ისარგებლეთ შეუზღუდავი ტოკენებით და უმაღლესი ხარისხის AI მოდელით. აღარ იფიქროთ ლიმიტებზე - ფოკუსირდით შემოქმედებაზე და პროდუქტიულობაზე.
+                        </p>
+                        <ul class="feature-list">
+                            <li><div class="check-icon"></div>შეუზღუდავი ტოკენები თვეში</li>
+                            <li><div class="check-icon"></div>24/7 წვდომა უძლიერეს მოდელზე</li>
+                            <li><div class="check-icon"></div>პრიორიტეტული დამუშავება</li>
+                        </ul>
+                    </div>
+                    <div class="feature-image">
+                        <img src="https://mypen.ge/images/rocket-guy-transparent.webp" alt="Unlimited AI Power" style="max-width: 100%; height: auto;">
+                    </div>
+                </div>
+                
+                <!-- Document Analysis -->
+                <div class="feature-row">
+                    <div class="feature-image">
+                        <img src="https://mypen.ge/images/text-in-document.webp" alt="Document Analysis" style="max-width: 100%; height: auto; border-radius: 16px;">
+                    </div>
+                    <div class="feature-content">
+                        <div class="badge">დოკუმენტებთან მუშაობა</div>
+                        <h2 class="feature-title">სიღრმისეული დოკუმენტების ანალიზი</h2>
+                        <p class="feature-description">
+                            ატვირთეთ და გააანალიზეთ ნებისმიერი ზომის დოკუმენტები. Mypen ULTRA-ს შეუძლია დეტალურად იმუშაოს PDF-ებთან, Word დოკუმენტებთან და სურათებთან.
+                        </p>
+                        <ul class="feature-list">
+                            <li><div class="check-icon"></div>დიდი ფაილების მხარდაჭერა</li>
+                            <li><div class="check-icon"></div>ტექსტის ამოღება სურათებიდან</li>
+                            <li><div class="check-icon"></div>მულტი-დოკუმენტური ანალიზი</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Translation -->
+                <div class="feature-row">
+                    <div class="feature-content">
+                        <div class="badge">თარგმნა და ენები</div>
+                        <h2 class="feature-title">უნივერსალური თარგმნა</h2>
+                        <p class="feature-description">
+                            Mypen ULTRA-ით თარგმნეთ ნებისმიერი ტექსტი ან მთელი დოკუმენტები 100+ ენაზე. ფაილების პირდაპირი თარგმნა PDF, DOC და სხვა ფორმატებიდან.
+                        </p>
+                        <ul class="feature-list">
+                            <li><div class="check-icon"></div>100+ ენის მხარდაჭერა</li>
+                            <li><div class="check-icon"></div>დოკუმენტების პირდაპირი თარგმნა</li>
+                            <li><div class="check-icon"></div>კონტექსტური და ზუსტი თარგმნა</li>
+                        </ul>
+                    </div>
+                    <div class="feature-image">
+                        <img src="https://mypen.ge/images/translate-document.webp" alt="Universal Translation" style="max-width: 100%; height: auto; border-radius: 16px;">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3 Models Section -->
+            <div class="models-section">
+                <div class="section-title">3 AI მოდელი = შეუძლებელი არაფერია</div>
+                <p style="text-align: center; color: #cccccc; margin-bottom: 30px;">
+                    Mypen ULTRA-ით იღებთ წვდომას ყველა ჩვენს მოდელზე. არ გჭირდებათ ცალ-ცალკე გამოწერების შეძენა.
+                </p>
+                
+                <div class="models-grid">
+                    <div class="model-card">
+                        <div class="model-inner">
+                            <img src="https://mypen.ge/images/mypen-light.svg" alt="Mypen Light" class="model-icon">
+                            <h3 class="model-name">Mypen Light</h3>
+                            <p class="model-desc">ყველა საბაზისო ინსტრუმენტი AI-სთან მუშაობის დასაწყებად.</p>
+                            <ul class="model-features">
+                                <li><div class="model-dot green-dot"></div>სწრაფი პასუხები</li>
+                                <li><div class="model-dot green-dot"></div>ძირითადი ტექსტის შედგენა</li>
+                                <li><div class="model-dot green-dot"></div>მარტივი თარგმნა</li>
+                                <li><div class="model-dot green-dot"></div>ყოველდღიური კითხვები</li>
+                                <li><div class="model-dot green-dot"></div>ენერგოეფექტური</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="model-card">
+                        <div class="model-inner">
+                            <img src="https://mypen.ge/images/mypen-pro.svg" alt="Mypen PRO" class="model-icon">
+                            <h3 class="model-name">Mypen PRO</h3>
+                            <p class="model-desc">მაღალი ხარისხის კონტენტის სწრაფად შესაქმნელად.</p>
+                            <ul class="model-features">
+                                <li><div class="model-dot blue-dot"></div>გაუმჯობესებული ანალიზი</li>
+                                <li><div class="model-dot blue-dot"></div>კრეატიული წერა</li>
+                                <li><div class="model-dot blue-dot"></div>კოდის გენერაცია</li>
+                                <li><div class="model-dot blue-dot"></div>დოკუმენტების ანალიზი</li>
+                                <li><div class="model-dot blue-dot"></div>მაღალი ზუსტობა</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="model-card">
+                        <div class="model-inner">
+                            <img src="https://mypen.ge/images/mypen-ultra.svg" alt="Mypen ULTRA" class="model-icon">
+                            <h3 class="model-name">Mypen ULTRA</h3>
+                            <p class="model-desc">შეუზღუდავი შემოქმედებისა და რთული ამოცანებისთვის.</p>
+                            <ul class="model-features">
+                                <li><div class="model-dot purple-dot"></div>შეუზღუდავი ტოკენები</li>
+                                <li><div class="model-dot purple-dot"></div>ყველაზე მოწინავე AI მოდელი</li>
+                                <li><div class="model-dot purple-dot"></div>რეალურ დროში ვებ ძიება</li>
+                                <li><div class="model-dot purple-dot"></div>დიდი ფაილების ანალიზი</li>
+                                <li><div class="model-dot purple-dot"></div>პრიორიტეტული მხარდაჭერა</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonials -->
+            <div class="testimonials-section">
+                <div class="section-title">გამოხმაურებები</div>
+                <p style="text-align: center; color: #cccccc; margin-bottom: 30px;">
+                    შეუერთდი Mypen-ის კმაყოფილი მომხმარებლების რიცხვს
+                </p>
+                
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-inner">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">
+                                "Mypen ULTRA არის ჩემი საიდუმლო იარაღი. როგორც კონტენტის შემქმნელი, მუდმივად მჭირდება ახალი იდეები და კვლევა. ULTRA მოდელის შეუზღუდავი წვდომა მაძლევს საშუალებას, საათობით ვიმუშაო შეფერხების გარეშე და მივიღო უმაღლესი ხარისხის პასუხები."
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">დ</div>
+                                <div class="author-info">
+                                    <p class="author-name">დავით ჩ.</p>
+                                    <p class="author-role">მარკეტერი და ბლოგერი</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-inner">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">
+                                "ჩვენი გუნდისთვის Mypen-ი ყოველდღიური სამუშაოს შეუცვლელი ნაწილი გახდა. ვიყენებთ ყველაფრისთვის — კლიენტების იმეილების შედგენიდან დაწყებული, შიდა დოკუმენტაციის მომზადებით დამთავრებული."
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">ნ</div>
+                                <div class="author-info">
+                                    <p class="author-name">ნინო ე.</p>
+                                    <p class="author-role">მცირე ბიზნესის მფლობელი</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pricing -->
+            <div class="pricing-section">
+                <div class="section-title">თქვენს საჭიროებებზე მორგებული AI პაკეტები</div>
+                <p style="text-align: center; color: #cccccc; margin-bottom: 30px;">
+                    მიუხედავად იმისა, ახლა იწყებთ თუ გჭირდებათ პროფესიონალური დონის AI ინსტრუმენტები, ჩვენ გვაქვს საფასო პაკეტი, რომელიც შეესაბამება თქვენს მოთხოვნებს
+                </p>
+                
+                <div class="pricing-card">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0;">MyPen Ultra</h3>
+                    <div class="price">₾52<span class="price-period">/თვე</span></div>
+                    <p class="price-description">შეუზღუდავი შემოქმედებისა და რთული ამოცანებისთვის.</p>
+                    
+                    <ul class="pricing-features">
+                        <li><span class="pricing-check">✓</span> წვდომა ყველა 3 მოდელზე (Light, Pro, Ultra)</li>
+                        <li><span class="pricing-check">✓</span> შეუზღუდავი ტოკენები (ლიმიტების გარეშე)</li>
+                        <li><span class="pricing-check">✓</span> AI წერა და თარგმნა ქართულად</li>
+                        <li><span class="pricing-check">✓</span> უძლიერესი მოდელი ყველა რთული ამოცანისთვის</li>
+                        <li><span class="pricing-check">✓</span> ინტერნეტში ძიება რეალურ დროში</li>
+                        <li><span class="pricing-check">✓</span> დიდი ფაილების ანალიზი (PDF, DOC, სურათები)</li>
+                        <li><span class="pricing-check">✓</span> დოკუმენტების სიღრმისეული ანალიზი</li>
+                        <li><span class="pricing-check">✓</span> 24/7 წვდომა უძლიერეს მოდელზე</li>
+                        <li><span class="pricing-check">✓</span> პრიორიტეტული დახმარება</li>
+                        <li><span class="pricing-check">✓</span> ყველა ფუნქცია ერთ პაკეტში</li>
+                    </ul>
+                    
+                    <a href="https://chat.mypen.ge?utm_source=web&utm_campaing=ultra-landing" class="cta-button">გახდი Mypen ULTRA</a>
+                </div>
+            </div>
+            
+            <!-- FAQ -->
+            <div class="faq-section">
+                <div class="section-title">ხშირად დასმული კითხვები</div>
+                <p style="text-align: center; color: #cccccc; margin-bottom: 30px;">
+                    აქ იპოვით პასუხებს ყველაზე ხშირად დასმულ კითხვებზე.
+                </p>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">რა არის Mypen.ge?</h3>
+                    <p class="faq-answer">
+                        Mypen.ge არის მოწინავე ჩათ-პლატფორმა, რომელიც გაძლევთ საშუალებას, ერთიან ინტერფეისში იმუშაოთ მრავალფეროვან მოდელებთან. ის შექმნილია მძლავრი, მოქნილი და რეალურ დროში მუშაობის გამოცდილებისთვის, ისეთი ფუნქციებით, როგორიცაა ფაილების ატვირთვა, კოდის წერა და სტატიების მომზადება.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">როგორ დავიწყო და არსებობს თუ არა უფასო ვერსია?</h3>
+                    <p class="faq-answer">
+                        დაწყება მარტივია. შეგიძლიათ დარეგისტრირდეთ უფასო ანგარიშზე, რომ პლატფორმის ძირითადი ფუნქციები აღმოაჩინოთ. უფასო პაკეტი მოიცავს ტოკენების ყოველდღიურ ლიმიტს და წვდომას ისეთ AI მოდელებზე, როგორიცაა "Mypen LIGHT".
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">რომელ AI მოდელებზე მაქვს წვდომა პლატფორმაზე?</h3>
+                    <p class="faq-answer">
+                        პლატფორმაზე ინტეგრირებულ Mypen-ის მოდელებზე წვდომა, (როგორიცაა "Mypen LIGHT", "Mypen PRO", "Mypen ULTRA"), დამოკიდებულია თქვენს სააბონენტო პაკეტზე. Pro ან Ultra პაკეტზე გადასვლა გაგიხსნით წვდომას ჩვენს ყველაზე მძლავრ და დიდი შესაძლებლობების მქონე მოდელებზე.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">შემიძლია ფაილების ატვირთვა? რა ტიპის ფაილების მხარდაჭერაა?</h3>
+                    <p class="faq-answer">
+                        დიახ, შეგიძლიათ ატვირთოთ სხვადასხვა ფაილი, მათ შორის სურათები და ტექსტური დოკუმენტები. ინტერფეისი გამარტივებულია და გთავაზობთ "სურათის ატვირთვის" და "ტექსტად ატვირთვის" ოფციებს.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <div class="footer-title">
+                            <img src="https://mypen.ge/images/saasify-logo-dark.svg" alt="Mypen Logo" style="max-width: 120px; height: auto;">
+                        </div>
+                        <p style="color: #cccccc; font-size: 14px; margin: 15px 0;">
+                            AI ტექნოლოგიაზე დაფუძნებული ტექსტის გაუმჯობესების ხელსაწყოები.
+                        </p>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-title">სერვისები</h4>
+                        <ul class="footer-links">
+                            <li><a href="https://mypen.ge/#features">მახასიათებლები</a></li>
+                            <li><a href="https://mypen.ge/#pricing">ფასი</a></li>
+                            <li><a href="https://chat.mypen.ge">AI ასისტენტი</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-title">კომპანია</h4>
+                        <ul class="footer-links">
+                            <li><a href="https://mypen.ge/privacy">კონფიდენციალურობა</a></li>
+                            <li><a href="https://mypen.ge/terms">წესები და პირობები</a></li>
+                            <li><a href="https://mypen.ge/refund-policy">დაბრუნების პოლიტიკა</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Mypen.ge. ყველა უფლება დაცულია.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

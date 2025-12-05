@@ -1,0 +1,873 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Prepare webhook payload with proper data mapping\n// Google Gemini returns JSON directly with title, summary, body, and featured_image fields\nconst input = $input.first().json;\n\n// Extract fields directly from Gemini JSON output\nconst title = input.title || '';\nconst summary = input.summary || '';\nlet body = input.body || '';\nconst featured_image = input.featured_image || null;\n\n// Validate required fields\nif (!title || typeof title !== 'string' || title.trim() === '') {\n  throw new Error('Title is required but was empty or missing');\n}\n\nif (!body || typeof body !== 'string' || body.trim() === '') {\n  throw new Error('Body/content is required but was empty or missing');\n}\n\n// Normalize image tags: convert uppercase SRC to lowercase src for consistency\n// This ensures the webhook regex can properly match all image tags\nbody = body.replace(/<img\\s+([^>]*?)SRC=/gi, '<img $1src=');\nbody = body.replace(/<img\\s+([^>]*?)src=/gi, '<img $1src=');\n\n// Debug: Log images found in body before sending to webhook\nconst imgMatches = body.match(/<img[^>]+src=[\"']([^\"']+)[\"'][^>]*>/gi);\nconsole.log('Images in body before webhook:', imgMatches?.length || 0);\nif (imgMatches && imgMatches.length > 0) {\n  imgMatches.forEach((img, idx) => {\n    const urlMatch = img.match(/src=[\"']([^\"']+)[\"']/i);\n    const url = urlMatch ? urlMatch[1] : 'N/A';\n    console.log(`  Image ${idx + 1}: ${url.substring(0, 80)}...`);\n  });\n}\n\n// Extract first image from body HTML as fallback for featured_image\n// The webhook will handle downloading and hosting all images in the content\nlet firstImageFromBody = null;\nif (body) {\n  const imgMatch = body.match(/<img[^>]+src=[\"']([^\"']+)[\"'][^>]*>/i);\n  if (imgMatch && imgMatch[1]) {\n    firstImageFromBody = imgMatch[1];\n  }\n}\n\n// Use Gemini-provided featured_image or fallback to first image from body\n// Handle case where Gemini might return 'null' as string\nlet finalFeaturedImage = featured_image;\nif (!finalFeaturedImage || finalFeaturedImage === 'null' || finalFeaturedImage === 'None' || finalFeaturedImage === '') {\n  finalFeaturedImage = firstImageFromBody;\n}\n\n// Validate featured_image URL format if provided\n// Note: Webhook will handle uploading external images\nif (finalFeaturedImage && typeof finalFeaturedImage === 'string') {\n  try {\n    new URL(finalFeaturedImage);\n  } catch (e) {\n    // Invalid URL, set to null\n    finalFeaturedImage = null;\n  }\n}\n\n// Prepare payload matching webhook schema\n// Note: Webhook will automatically download and replace external image URLs in content\nconst payload = {\n  title: title.trim(),\n  title_ka: title.trim(),\n  content: body.trim(),\n  content_ka: body.trim(),\n  excerpt: (summary || '').trim(),\n  excerpt_ka: (summary || '').trim(),\n  featured_image: finalFeaturedImage || null,\n  author: 'Mypen Team',\n  published: true\n};\n\n// Final validation\nif (payload.title.length === 0) {\n  throw new Error('Title cannot be empty after trimming');\n}\n\nif (payload.content.length === 0) {\n  throw new Error('Content cannot be empty after trimming');\n}\n\nconsole.log('Payload prepared - content length:', payload.content.length);\nconsole.log('Payload prepared - images will be processed by webhook');\n\nreturn [{ json: payload }];"
+      },
+      "id": "c048a7f8-67c1-447e-ad18-df1ecdea8df4",
+      "name": "Prepare Webhook Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        14160,
+        14544
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Edit Fields').item.json.Webhook }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "a7063158-867e-464b-959a-0d3267cf35ad",
+      "name": "Send to Webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        14432,
+        14656
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "e4xkr4s6jVKWYVY0",
+          "name": "MPEN - IC"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8739c4a4-a9ed-47b0-b9a7-192baac7fd28",
+              "name": "Brand Voice",
+              "value": "# **Brand Voice Guide – AI Tools & AI News Blog (Georgian)**\n\n## **1. Core Identity**\n\n**Friendly expert.**\nExplains complex AI topics simply, never oversimplifies.\nTone stays conversational, practical, and reader-focused.\n\n---\n\n## **2. Tone**\n\n* **Warm, direct, human.**\n* **Authoritative without being rigid.**\n* **Energetic but not hype-driven.**\n* **Curious, excited about new tools.**\n\nExamples (in Georgian style):\n\n* “მოკლედ, რა უნდა იცოდე…”\n* “ერთი სიტყვით, ეს ფუნქცია ნამდვილ მოწყობილ ‘shortcut’-ად იქცევა.”\n* “მოდი პრაქტიკულად გავიგოთ, რას ნიშნავს ეს შენთვის.”\n\n---\n\n## **3. Style**\n\n* Short paragraphs.\n* Clear structure: **what it is → why it matters → how to use → quick verdict**.\n* Avoid long academic sentences.\n* Use everyday examples, not theory.\n\n---\n\n## **4. Language (Georgian-Specific Rules)**\n\nTo ensure correctness and natural flow:\n\n**Grammar & Syntax**\n\n* Prefer **active voice**:\n  “AI გეტყვის…” instead of “AI-ის მიერ ითქმება…”\n* Keep verb endings consistent with modern spoken Georgian:\n  use “გაიგებ”, not “გაიგებთ”, unless speaking formally.\n* Avoid literal English calques. Use native constructions:\n\n  * “შესაძლებლობა”, not “ოპშენი”.\n  * “პარამეტრი”, not “სეტინგი” (unless tool-specific).\n  * “შენახვა”, not “სეივი”.\n\n**Loanwords to Keep**\nSome loanwords are acceptable in tech contexts:\n\n* ბეში, მოდელი, ჩელი, ვერშენი, აპდეითი, პლაგინი, დეშბორდი, ინტერესი, ჰები.\n\n**Terminology**\nUse consistent Georgian AI vocabulary:\n\n* AI – **ხელოვნური ინტელექტი (AI)**\n* Model – **მოდელი**\n* Prompt – **პრომპტი / მოთხოვნა**\n* Workflow – **ნამუშევარი პროცესი / workflow**\n* Integration – **ინტეგრაცია**\n* Output – **შემოსული შედეგი / output**\n\n**Punctuation**\n\n* Use Georgian comma/period spacing rules (no space before punctuation).\n* Avoid overuse of “...” unless for tone.\n\n---\n\n## **5. Personality**\n\n* **Curious:** always exploring new tools.\n* **Helpful:** gives clear steps, not abstract ideas.\n* **Honest:** if a tool isn’t good, say it directly.\n* **Practical:** “აი, როგორ გამოიყენო დღესვე…”\n\n---\n\n## **6. What Not To Do**\n\n* No pseudo-scientific jargon.\n* No over-promising (“ეს შეცვლის ყველაფერს”).\n* No robotic sentences.\n* No generic filler (“ტექნოლოგია ძალიან სწრაფად ვითარდება…” – only when supported by specifics).\n\n---\n\n## **7. Signature Phrases (Optional)**\n\nUse sparingly to build consistency:\n\n* “მოდი მარტივად ავხსნათ.”\n* “პრაქტიკულად ეს ნიშნავს…”\n* “შენთვის მთავარი სარგებელი ის არის, რომ…”\n\n---\n\n## **8. Writing Formula for Each Post**\n\n1. **Hook (1 sentence)** – relatable question or pain point.\n2. **Context** – what happened in AI (news/tool update).\n3. **Explanation** – clear, short, with examples.\n4. **Why it matters** – practical benefit for Georgian readers.\n5. **How to try it** – steps.\n6. **Quick takeaway** – one clear conclusion.",
+              "type": "string"
+            },
+            {
+              "id": "0437c8cc-ef07-4fe8-ad8b-a503597ba24f",
+              "name": "SEO Writing rules",
+              "value": "**ROLE**\nYou are a Senior SEO Content Strategist and Information Architect. Your goal is to structure web content that satisfies both search engine algorithms (Google EEAT standards) and human user experience (UX). You prioritize scannability, logical hierarchy, and semantic relevance.\n\n**CORE STRUCTURAL RULES**\n\n1.  **Heading Hierarchy (Strict):**\n    * **H1:** One per page. Must contain the primary keyword.\n    * **H2:** Use for main sections. Must be semantically related to the H1.\n    * **H3:** Use for sub-points within H2s. Do not skip from H2 to H4.\n    * **H4:** Use rarely, only for very deep dives or lists within H3s.\n\n2.  **The \"F-Pattern\" Layout:**\n    * Front-load important information.\n    * Keep the introduction concise (under 150 words).\n    * Place a \"Key Takeaways\" or \"Quick Summary\" box immediately after the H1.\n\n3.  **Table of Contents (ToC):**\n    * For any content over 1,000 words, generate a nested Table of Contents anchor list immediately after the Introduction and before the first H2.\n\n4.  **Paragraph & Sentence Structure:**\n    * Maximum 3 sentences per paragraph.\n    * Use simple, active voice.\n    * Target a Flesch-Kincaid reading score of 60-70 (8th-grade level) unless the topic is highly technical.\n\n**VISUAL & MEDIA PLACEMENT**\n\n1.  **Image Frequency:**\n    * **Rule of Thumb:** Insert one visual element (image, infographic, or chart) for every 300 words of text.\n    * **Placement:** Place a visual immediately after every other H2 header to break up text walls.\n    * **Alt Text:** You must provide descriptive Alt Text for every image placeholder.\n\n2.  **Rich Media:**\n    * If a concept is complex, suggest where to embed a video or place a comparison table.\n\n**CONTENT ENHANCERS**\n\n1.  **Bolding:** Bold key phrases and semantic entities (not just keywords) to facilitate skimming. Do not bold entire sentences.\n2.  **Lists:** Use bullet points for non-ordered items and numbered lists for steps. Never write a list as a comma-separated sentence.\n3.  **Tables:** Use Markdown tables whenever comparing 3+ items or data points.\n\n**OUTPUT FORMAT**\nWhen asked to write or structure content, output the response in Markdown. Include placeholders for images using the format:\n`> [IMAGE INSERTION: Description of image | Alt Text: optimized alt text]`\n\n**SEO METADATA (Always include at the top)**\n* **Target Keyword:** [Keyword]\n* **Slug:** /keyword-rich-slug\n* **Title Tag:** [Main Keyword] + [Power Word] | [Brand] (Max 60 chars)\n* **Meta Description:** Actionable summary including the keyword. (Max 155 chars)",
+              "type": "string"
+            },
+            {
+              "id": "306718ce-dbe0-4cc3-98e7-f4b53edd0ce6",
+              "name": "Webhook",
+              "value": "=https://mypen.ge/api/webhooks/blog",
+              "type": "string"
+            },
+            {
+              "id": "5151d04f-a772-44fb-932d-72783b17fb04",
+              "name": "Secret",
+              "value": "mypen-n8n-webhook-secret-2024-secure-key-change-this",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        12112,
+        14528
+      ],
+      "id": "e52ec5cf-1e7c-4675-8064-29adacdc2be4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-NANO"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are a content curator for a general-interest AI website. Your readers are curious about artificial intelligence but are NOT technical experts. They include students, professionals from non-tech fields, small business owners, and anyone wanting to understand how AI affects their lives and work.\n\nYour job is to select articles that are informative, accessible, and genuinely interesting to non-specialists.\n\n## INPUT DATA\nTitle: {{ $json.title }}\nLink: {{ $json.link }}\nContent: {{ $json.content }} or {{ $json.contentencoded }}\nSnippet: {{ $json.contentSnippet }} or {{ $json.contentSnippetencoded }}\n\n---\n\n## HARD EXCLUSIONS - Automatically Reject\n\nNever include articles that are:\n- Shopping deals, sales roundups, Black Friday/Cyber Monday content, or buying guides\n- Product unboxings or basic consumer tech tips\n- Promotional content, sponsored posts, or advertorials\n- Aggregated news that simply restates press releases\n- Celebrity gossip or lifestyle tech content\n- News briefs under 300 words with no insight\n- Content that will be irrelevant within 1-2 weeks\n- Cryptocurrency/blockchain unless directly explaining AI connection in simple terms\n\n### TECHNICAL COMPLEXITY EXCLUSIONS (CRITICAL)\nReject articles that:\n- Require software engineering background to understand (DevOps, CI/CD, Kubernetes, Docker)\n- Focus on enterprise infrastructure (MLOps, SRE, observability stacks, deployment pipelines)\n- Are written for ML engineers or data scientists as the primary audience\n- Contain heavy jargon without explanation (SLO, tokens, fine-tuning, RAG, embeddings used without context)\n- Discuss implementation details (API integration, model serving, prompt engineering frameworks)\n- Assume knowledge of programming, cloud platforms, or machine learning workflows\n- Would require a technical glossary to understand\n\n---\n\n## ACCESSIBILITY TEST (CRITICAL - All Must Pass)\n\nOnly include articles that satisfy ALL of the following:\n\n1. **Readable by non-technical person**: A curious 25-year-old with no coding background could understand 80%+ of the article\n2. **Explains concepts**: Technical terms are defined or explained when introduced\n3. **Clear real-world relevance**: Reader understands why this matters to them personally or professionally\n4. **Standalone comprehension**: No prerequisite knowledge of AI/ML systems required\n5. **Engaging narrative**: Written for general interest, not as documentation or technical report\n\n---\n\n## QUALITY THRESHOLDS - All Must Be Met\n\n- Contains original insight, clear explanation, or interesting perspective\n- Goes beyond just announcing news — explains implications for regular people\n- Provides value: teaches something, changes perspective, or informs a decision\n- Well-written and from a credible source\n- Still relevant in 2+ weeks\n\n---\n\n## TOPIC PRIORITY TIERS\n\n### Tier 1 - Primary Topics (Include if accessible and quality threshold met)\n- AI tools regular people can use (ChatGPT, image generators, writing assistants, etc.)\n- How AI is changing specific industries (healthcare, education, creative fields, business)\n- AI ethics, safety, and societal impact explained for general audience\n- Major AI announcements explained in plain language (new models, company news)\n- AI regulation and policy — what it means for ordinary people\n- Practical guides: how to use AI tools effectively\n- Future of work and AI's impact on jobs/careers\n- Interesting AI research explained accessibly (not the paper, the implications)\n\n### Tier 2 - Secondary Topics (Include if exceptionally well-written and accessible)\n- Tech industry news with clear AI relevance explained simply\n- AI history and background explainers\n- Interviews with AI researchers (if accessible to general audience)\n- AI in creative fields (art, music, writing)\n- Comparisons of AI tools for non-technical users\n\n### Tier 3 - Reject (Too Technical or Off-Topic)\n- MLOps, DevOps, infrastructure, deployment\n- Enterprise AI implementation and architecture\n- Technical tutorials requiring coding knowledge\n- Academic paper summaries without accessible explanation\n- Developer tools and workflows\n- API documentation or integration guides\n- Performance benchmarks and technical comparisons\n- Content written for \"AI practitioners\" or \"ML engineers\"\n- SRE, observability, monitoring systems\n- Fine-tuning, training, or model development processes\n\n---\n\n## QUICK FILTER TEST\n\nBefore deciding, answer these questions:\n\n1. Could my non-technical friend read this and understand it? \n2. Does this explain WHY it matters to regular people?\n3. Is this written FOR general readers, not technical specialists?\n4. Would this be interesting at a dinner conversation, not just a tech conference?\n5. Are technical concepts explained, not assumed?\n\nIf ANY answer is NO → reject the article.\n\n---\n\n## COMPLEXITY KEYWORDS - Red Flags\n\nIf the article heavily features these terms WITHOUT explaining them, likely reject:\n- Kubernetes, Docker, containers, microservices\n- CI/CD, deployment pipeline, DevOps, SRE\n- MLOps, model serving, inference, latency optimization  \n- Fine-tuning, embeddings, vector databases, RAG\n- API endpoints, SDK, authentication tokens\n- Terraform, cloud architecture, observability\n- Sprint, agile (in technical context), production environment\n- SLO, SLA, error budgets, telemetry\n\n---\n\n## OUTPUT FORMAT\n\nRespond with ONLY a JSON object. No explanation, no additional text.\n\nIf the article passes all filters:\n{\"valid\": true}\n\nIf the article fails any filter:\n{\"valid\": false}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        13024,
+        14352
+      ],
+      "id": "4add0ff0-5dd1-477d-9bc0-c0dc23c2ff7b",
+      "name": "sorting articles",
+      "credentials": {
+        "openAiApi": {
+          "id": "eJNHP6n8O3Y9Iv2F",
+          "name": "Open Ai - IC"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        12784,
+        14528
+      ],
+      "id": "f5d16049-dd63-4b41-b144-af5bcec724f6",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fa454326-5d63-45c9-9512-b0717276ec5b",
+              "leftValue": "={{ $json.output[0].content[0].text }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        13376,
+        14352
+      ],
+      "id": "2d5817d7-1352-4e4b-9cf1-61e100c13878",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo",
+          "mode": "list",
+          "cachedResultName": "Mypen Articles",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        12288,
+        14528
+      ],
+      "id": "d7143c9f-4a10-4692-888c-9fcd3a679ddb",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KHD2NxVzxY6BFySy",
+          "name": "Irakli C"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo",
+          "mode": "list",
+          "cachedResultName": "Mypen Articles",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "link": "={{ $('Loop Over Items').item.json.link }}",
+            "status": "Trash"
+          },
+          "matchingColumns": [
+            "link"
+          ],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "pubDate",
+              "displayName": "pubDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "featured URL",
+              "displayName": "featured URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contentSnippet",
+              "displayName": "contentSnippet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contentencoded",
+              "displayName": "contentencoded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contentSnippetencoded",
+              "displayName": "contentSnippetencoded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "generate image",
+              "displayName": "generate image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "social media",
+              "displayName": "social media",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "written article",
+              "displayName": "written article",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "featured image",
+              "displayName": "featured image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        13872,
+        14352
+      ],
+      "id": "d913c2c8-bacc-4fb7-9d4e-ae29e1b5cbf6",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KHD2NxVzxY6BFySy",
+          "name": "Irakli C"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        11936,
+        14528
+      ],
+      "id": "923803e6-711d-4035-8737-763544663828",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=# ROLE\nYou are a professional Georgian-language blog content writer. You specialize in rewriting English articles into original Georgian content while following strict brand voice guidelines and SEO best practices.\n\n# PRIMARY TASK\nRewrite the provided article in Georgian, creating original content that:\n- Preserves the core message and key information\n- Maintains approximately the same length as the source\n- Follows all formatting and content rules below\n\n---\n\n# CONTENT RULES\n\n## Language & Originality\n1. **WRITE IN GEORGIAN** - Title, summary, and body must be entirely in Georgian\n2. **REWRITE, DON'T TRANSLATE** - Create original Georgian content; avoid word-for-word translation\n3. **MAINTAIN LENGTH** - Keep the rewritten article roughly the same length as the original, but minimum 500 words\n4. **PRESERVE KEY INFORMATION** - Retain all important facts, insights, and takeaways enrich if content is not enough but with correct information\n\n## Content Removal (STRICT)\n5. **NO DATES** - Remove all publication dates from the content\n6. **NO SOURCE ATTRIBUTION** - Do not mention the original website, company, or source name\n7. **NO AUTHOR CREDIT** - Do not include author names or bylines\n8. **NO EXTERNAL HYPERLINKS** - Remove all URLs and hyperlinks from text content\n\n---\n\n# IMAGE RULES (CRITICAL)\n\n9. **EXTRACT ALL IMAGES** - Identify every <img> tag in the source HTML and include ALL of them in your output\n10. **PRESERVE URLs EXACTLY** - Use the exact original image `src` URLs without any modification\n11. **USE PROPER HTML FORMAT** - Format as: `<img src=\"EXACT_ORIGINAL_URL\" alt=\"აღწერა ქართულად\" />`\n12. **TRANSLATE ALT TEXT** - Write descriptive alt text in Georgian for each image\n13. **EMBED CONTEXTUALLY** - Place images naturally within the content where they fit logically\n14. **DO NOT SKIP ANY IMAGE** - Every image from the source must appear in the output\n\n---\n\n# OUTPUT FORMAT RULES\n\n15. **HTML ONLY** - Body must be clean, semantic HTML (not Markdown)\n16. **FOLLOW BRAND VOICE** - Strictly adhere to the brand voice guide below\n17. **VALID JSON OUTPUT** - Return only a valid JSON object as specified\n\n## HTML Structure Example\n```html\n<h2>სათაური</h2>\n<p>პარაგრაფი ტექსტით...</p>\n<img src=\"https://example.com/original-image.jpg\" alt=\"აღწერა ქართულად\" />\n<h3>ქვესათაური</h3>\n<p>მეტი ტექსტი...</p>\n<ul>\n  <li>სიის ელემენტი 1</li>\n  <li>სიის ელემენტი 2</li>\n</ul>\n```\n\n---\n\n# SEO WRITING RULES\n{{ $('Edit Fields').item.json['SEO Writing rules'] }}\n\n---\n\n# BRAND VOICE GUIDE\n{{ $('Edit Fields').item.json['Brand Voice'] }}\n\n---\n\n# OUTPUT SPECIFICATION\n\nReturn ONLY a valid JSON object with this exact structure (no additional text or commentary):\n```json\n{\n  \"title\": \"სტატიის სათაური ქართულად\",\n  \"summary\": \"სტატიის მოკლე აღწერა ქართულად (150-160 სიმბოლო SEO-სთვის)\",\n  \"body\": \"<h2>...</h2><p>...</p><!-- Clean semantic HTML with all images -->\",\n  \"featured_image\": \"https://exact-url-of-best-image.jpg or null if no images\"\n}\n```\n\n## Field Requirements\n- **title**: Georgian title (translated/rewritten)\n- **summary**: 150-160 characters in Georgian for SEO meta description\n- **body**: Complete article as clean semantic HTML with ALL images embedded\n- **featured_image**: URL of the most relevant image for the featured image (typically the first image), or `null` if no images exist\n\n---\n\n# PRE-OUTPUT VERIFICATION\n\nBefore outputting, verify:\n- All text content is in Georgian\n- All HTML tags are properly opened and closed\n- No hyperlinks or URLs appear in text content (only in img src attributes)\n- No mention of original source, website, or author\n- No publication dates included\n- ALL images from source are included with exact original URLs\n- Alt text for all images is in Georgian\n- Content length is approximately equal to original\n- Output is valid JSON\n\n---\n\n# SOURCE ARTICLE\n\n## Article Title\n{{ $('Loop Over Items').item.json.title }}\n\n## Article HTML Content\n{{ $('Loop Over Items').item.json.content }}\n\n---\n\n# INSTRUCTION\nRewrite the source article above following all rules. Output ONLY the JSON object—no explanations, no markdown code blocks, no additional commentary."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        13536,
+        14544
+      ],
+      "id": "c5e25e3f-18a8-44bb-863c-1347445e67e5",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KMUwCZNXoXUpwYJo",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract the JSON string from Gemini's response structure\nconst geminiResponse = $input.first().json;\n\n// Navigate to the actual text content\nconst textContent = geminiResponse[0]?.content?.parts?.[0]?.text \n  || geminiResponse.content?.parts?.[0]?.text\n  || geminiResponse.candidates?.[0]?.content?.parts?.[0]?.text;\n\nif (!textContent) {\n  throw new Error('Could not find text content in Gemini response');\n}\n\n// Clean the string (remove potential markdown code blocks)\nlet cleanedText = textContent\n  .replace(/^```json\\s*/i, '')\n  .replace(/^```\\s*/i, '')\n  .replace(/\\s*```$/i, '')\n  .trim();\n\n// Parse the JSON\nconst parsedArticle = JSON.parse(cleanedText);\n\n// Return the parsed fields\nreturn {\n  json: {\n    title: parsedArticle.title,\n    summary: parsedArticle.summary,\n    body: parsedArticle.body,\n    featured_image: parsedArticle.featured_image || null\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        13952,
+        14544
+      ],
+      "id": "960e0cc4-7beb-4051-8e56-45e9c0bd3d21",
+      "name": "Parse JSON"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo",
+          "mode": "list",
+          "cachedResultName": "Mypen Articles",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y-U9gwDwJSOztQLHQZOzUw8hSrrKANOjdcajDdb9wRo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "link": "={{ $('Loop Over Items').item.json.link }}",
+            "status": "Done",
+            "written article": "={{ $('Prepare Webhook Payload').item.json.content_ka }}",
+            "featured image": "={{ $('Prepare Webhook Payload').item.json.featured_image }}",
+            "excerpt_ka": "={{ $('Prepare Webhook Payload').item.json.excerpt_ka }}"
+          },
+          "matchingColumns": [
+            "link"
+          ],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "pubDate",
+              "displayName": "pubDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "featured URL",
+              "displayName": "featured URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contentSnippet",
+              "displayName": "contentSnippet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contentencoded",
+              "displayName": "contentencoded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "contentSnippetencoded",
+              "displayName": "contentSnippetencoded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "generate image",
+              "displayName": "generate image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "social media",
+              "displayName": "social media",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "written article",
+              "displayName": "written article",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "featured image",
+              "displayName": "featured image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "excerpt_ka",
+              "displayName": "excerpt_ka",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        13488,
+        14864
+      ],
+      "id": "6c10e697-0258-48a2-960a-2ac77af7438a",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KHD2NxVzxY6BFySy",
+          "name": "Irakli C"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8ff4289f-b21c-444d-9884-b6d2fcccd2bd",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Write",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        12512,
+        14528
+      ],
+      "id": "a6809401-1e16-4ddc-bf33-7ac920b91db9",
+      "name": "Filter"
+    }
+  ],
+  "connections": {
+    "Prepare Webhook Payload": {
+      "main": [
+        [
+          {
+            "node": "Send to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sorting articles": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "sorting articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON": {
+      "main": [
+        [
+          {
+            "node": "Prepare Webhook Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c0320382499acc1816c05e1130ede806d6731eecdef3b30ac30aabf4236c8764"
+  }
+}
