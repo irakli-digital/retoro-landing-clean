@@ -6,19 +6,19 @@ export const getPublishedPosts = unstable_cache(
   async (limit?: number): Promise<BlogPostPreview[]> => {
     const result = limit
       ? await sql`
-          SELECT id, title, title_ka, slug, excerpt, excerpt_ka, published_at, author, featured_image 
-          FROM posts 
-          WHERE published = true 
-          ORDER BY published_at DESC 
+          SELECT id, title, slug, excerpt, published_at, author, featured_image, featured
+          FROM posts
+          WHERE published = true
+          ORDER BY published_at DESC
           LIMIT ${limit}
         `
       : await sql`
-          SELECT id, title, title_ka, slug, excerpt, excerpt_ka, published_at, author, featured_image 
-          FROM posts 
-          WHERE published = true 
+          SELECT id, title, slug, excerpt, published_at, author, featured_image, featured
+          FROM posts
+          WHERE published = true
           ORDER BY published_at DESC
         `;
-    
+
     return result as BlogPostPreview[];
   },
   ['blog-posts'],
@@ -55,13 +55,13 @@ export async function getAllPostSlugs(): Promise<{ slug: string }[]> {
 
 export async function getFeaturedPosts(limit: number = 3): Promise<BlogPostPreview[]> {
   const result = await sql`
-    SELECT id, title, title_ka, slug, excerpt, excerpt_ka, published_at, author, featured_image 
-    FROM posts 
-    WHERE published = true AND featured_image IS NOT NULL
-    ORDER BY published_at DESC 
+    SELECT id, title, slug, excerpt, published_at, author, featured_image, featured
+    FROM posts
+    WHERE published = true AND featured = true
+    ORDER BY published_at DESC
     LIMIT ${limit}
   `;
-  
+
   return result as BlogPostPreview[];
 }
 
@@ -90,15 +90,15 @@ export const getPublishedFAQs = unstable_cache(
 );
 
 export const getFAQCategories = unstable_cache(
-  async (): Promise<{ category: string; category_ka: string }[]> => {
+  async (): Promise<{ category: string }[]> => {
     const result = await sql`
-      SELECT DISTINCT category, category_ka 
-      FROM faqs 
+      SELECT DISTINCT category
+      FROM faqs
       WHERE published = true AND category IS NOT NULL
       ORDER BY category ASC
     `;
-    
-    return result as { category: string; category_ka: string }[];
+
+    return result as { category: string }[];
   },
   ['faq-categories'],
   {
