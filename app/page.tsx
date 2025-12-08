@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { SmartCtaLink } from "@/components/smart-cta-link"
+import { ImageSlider } from "@/components/image-slider"
 
 export default function LandingPage() {
   const container = {
@@ -158,19 +159,42 @@ export default function LandingPage() {
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="relative mx-auto max-w-4xl mt-8"
             >
-              <div className="rounded-xl overflow-hidden shadow-2xl border border-border/40 bg-gradient-to-b from-background to-muted/20">
-                <Image
-                  src="/images/mypen-hero-dashboard.webp"
-                  width={1280}
-                  height={720}
-                  alt="MyPen dashboard interface with AI assistant"
-                  className="w-full h-auto"
-                  priority
+              {/* App Store-style vertical image slider */}
+              <div className="relative group">
+                <ImageSlider
+                  images={[
+                    {
+                      src: "/images/screenshots/app-screenshot-1.svg",
+                      alt: "Retoro app - Track purchases screen"
+                    },
+                    {
+                      src: "/images/screenshots/app-screenshot-2.svg",
+                      alt: "Retoro app - Return deadlines overview"
+                    },
+                    {
+                      src: "/images/screenshots/app-screenshot-3.svg",
+                      alt: "Retoro app - Receipt scanning feature"
+                    },
+                    {
+                      src: "/images/screenshots/app-screenshot-4.svg",
+                      alt: "Retoro app - Push notifications settings"
+                    },
+                    {
+                      src: "/images/screenshots/app-screenshot-5.svg",
+                      alt: "Retoro app - Money saved tracker"
+                    },
+                    {
+                      src: "/images/screenshots/app-screenshot-6.svg",
+                      alt: "Retoro app - Multi-currency support"
+                    }
+                  ]}
+                  autoSlideInterval={3500}
+                  className="drop-shadow-2xl"
                 />
-                <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
+                {/* Decorative gradient blurs */}
+                <div className="absolute -bottom-6 -right-6 -z-10 h-[250px] w-[250px] rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 blur-3xl opacity-70" />
+                <div className="absolute -top-6 -left-6 -z-10 h-[250px] w-[250px] rounded-full bg-gradient-to-br from-secondary/30 to-primary/30 blur-3xl opacity-70" />
               </div>
-              <div className="absolute -bottom-6 -right-6 -z-10 h-[250px] w-[250px] rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 blur-3xl opacity-70" />
-              <div className="absolute -top-6 -left-6 -z-10 h-[250px] w-[250px] rounded-full bg-gradient-to-br from-secondary/30 to-primary/30 blur-3xl opacity-70" />
             </motion.div>
           </div>
         </section>
