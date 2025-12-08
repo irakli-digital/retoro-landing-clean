@@ -50,11 +50,11 @@ export default function Header({ hideLoginButton = false, hideNavigation = false
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold">
           <Image
-            src={isDarkTheme ? "/images/saasify-logo-dark.svg" : "/images/saasify-logo-light.svg"}
-            alt="SaaSify Logo"
-            width={150}
-            height={35}
-            className="h-auto max-w-[150px]"
+            src="/images/logo/retoro-logo.svg"
+            alt="Retoro Logo"
+            width={140}
+            height={32}
+            className="h-8 w-auto"
             priority
           />
         </Link>
@@ -64,13 +64,13 @@ export default function Header({ hideLoginButton = false, hideNavigation = false
               href="/#features"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              მახასიათებლები
+              Features
             </Link>
             <Link
-              href="/#pricing"
+              href="/#how-it-works"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              ფასი
+              How it Works
             </Link>
             <Link
               href="/#faq"
@@ -88,14 +88,9 @@ export default function Header({ hideLoginButton = false, hideNavigation = false
 
           {!hideLoginButton && (
             <>
-              <Button variant="ghost" className="rounded-full" asChild>
-                <Link href="https://chat.mypen.ge">
-                  შესვლა
-                </Link>
-              </Button>
               <Button variant="default" className="rounded-full" asChild>
                 <SmartCtaLink>
-                  დაიწყე უფასოდ
+                  Get Started
                   <ChevronRight className="ml-1 size-4" />
                 </SmartCtaLink>
               </Button>
@@ -124,10 +119,10 @@ export default function Header({ hideLoginButton = false, hideNavigation = false
             {!hideNavigation && (
               <>
                 <Link href="/#features" className="py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-                  მახასიათებლები
+                  Features
                 </Link>
-                <Link href="/#pricing" className="py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-                  ფასი
+                <Link href="/#how-it-works" className="py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+                  How it Works
                 </Link>
                 <Link href="/#faq" className="py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
                   FAQ
@@ -136,14 +131,9 @@ export default function Header({ hideLoginButton = false, hideNavigation = false
             )}
             {!hideLoginButton && (
               <div className="flex flex-col gap-2 pt-2 border-t">
-                <Button variant="ghost" className="rounded-full w-full" asChild>
-                  <Link href="https://chat.mypen.ge" onClick={() => setMobileMenuOpen(false)}>
-                    შესვლა
-                  </Link>
-                </Button>
                 <Button variant="default" className="rounded-full w-full" asChild>
                   <SmartCtaLink onClick={() => setMobileMenuOpen(false)}>
-                    დაიწყე უფასოდ
+                    Get Started
                     <ChevronRight className="ml-1 size-4" />
                   </SmartCtaLink>
                 </Button>
